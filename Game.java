@@ -84,13 +84,10 @@ public class Game
         printLocationInfo();
     }
     
-    
-    
     private void printLocationInfo(){
-        
+        String exitString = "You are " + currentRoom.getDescription();
+        System.out.println(currentRoom.getExitString());
     }
-    
-    
     
     /**
      * Given a command, process (that is: execute) the command.
