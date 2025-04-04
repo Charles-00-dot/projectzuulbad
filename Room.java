@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 /**
  * Class Room - a room in an adventure game.
  *
@@ -15,10 +17,8 @@
 public class Room 
 {
     private String description;
-    private Room northExit;
-    private Room southExit;
-    private Room eastExit;
-    private Room westExit;
+    private HashMap<String,Room> exits;
+    
 
     /**
      * Create a room described "description". Initially, it has
@@ -29,23 +29,16 @@ public class Room
     public Room(String description) 
     {
         this.description = description;
+        this.exits = new HashMap<>();
     }
     
     public Room getExit(String direction){
-        Room nextRoom = null;
-        if(direction.equals("north")){
-            nextRoom = this.northExit;
-        }
-        if(direction.equals("east")){
-             nextRoom = this.eastExit;
-        }
-        if(direction.equals("south")){
-            nextRoom =  this.southExit;
-        }
-        if(direction.equals("west")){
-            nextRoom = this.westExit;
-        }
+        Room nextRoom = exits.get(direction);
         return null;
+    }
+    
+    private String getLongDescription(){
+        return "You are " + description + ".\n" + getExitString();
     }
 
     /** * Return a description of the room’s exits,
@@ -53,45 +46,23 @@ public class Room
     * @return A description of the available exits.
     */ 
     public String getExitString(){
-       String exitString = "You are " + description;
-    exitString += "\nExits: "; 
-    if(northExit != null) {
-            exitString += "north ";
-        }
-    if(eastExit != null) {
-            exitString += "east ";
-        }
-    if(southExit != null) {
-            exitString += "south ";
-        }
-    if(westExit != null) {
-            exitString += "west ";
-        }
+    String exitString = "Exits: ";
+    
+    for( String direction : exits.keySet() ){
+        exitString += (direction + " "); 
+        
+    }
+    
         return exitString;
     }
     
     /**
-     * Define the exits of this room.  Every direction either leads
-     * to another room or is null (no exit there).
-     * @param north The north exit.
-     * @param east The east east.
-     * @param south The south exit.
-     * @param west The west exit.
+     * Set the exit to a particul direction a neighbour
+     * @param direction to move 
+     * @param neighbor is the location name
      */
-    public void setExits(Room north, Room east, Room south, Room west) 
-    {
-        if(north != null) {
-            northExit = north;
-        }
-        if(east != null) {
-            eastExit = east;
-        }
-        if(south != null) {
-            southExit = south;
-        }
-        if(west != null) {
-            westExit = west;
-        }
+    public void setExit(String direction, Room neighbor) {
+      exits.put(direction, neighbor);
     }
 
     /**

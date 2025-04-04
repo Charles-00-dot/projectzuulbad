@@ -29,6 +29,10 @@ public class Parser
         commands = new CommandWords();
         reader = new Scanner(System.in);
     }
+    
+    public String showAllCommands(){
+        return commands.showAll();
+    }
 
     /**
      * @return The next command from the user.
